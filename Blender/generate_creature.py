@@ -1,25 +1,22 @@
 import bpy
 import bmesh
+import struct
+from collections import namedtuple
 from mathutils import Matrix, Vector
 from math import radians
 
-class Creature(tup):
-    leg_number = tup[0]
-    #TODO
-    
-def clean_objects():
-    #bpy.ops.object.mode_set(mode='OBJECT')
-    
-    for obj in bpy.context.scene.objects:
-        obj.select_set(True)
+#####
+#
+# Genetic algorithm
+#
+#####
 
-    bpy.ops.object.delete()
+def get_bit(num, i):
+    return (num & (1 << i)) != 0
 
-def min(a, b):
-    return a if a < b else b
-
-def abs(x):
-    return -x if x < 0 else x
+def update_bit(num, i, bit):
+    mask = ~(1 << i)
+    return (num & mask) | (bit << i)
 
 def selection():
     return
@@ -52,28 +49,61 @@ def generate_generations():
     #generate_creatre(population???)
     return 
 
-def generate_creature(
-    creature_location = Vector((0, 0, 0)), 
-    creature_scale = Vector((15, 3, 4)),
-    leg_number = 8,
-    leg_wanted_distance = -1,
-    leg_spread_angle = 60,
-    leg_joints = None,
-    leg_custom_offset = Vector((-2, 1, 2))
-):
-    if leg_joints is None:
-        leg_joints = [
-            Vector((0, 1.7, 2)),
-            Vector((0, 5, 0.2)),
-            Vector((0, 5, -(creature_scale.z / 2 + 4)))
-        ]
+#####
+#
+# Creature data structure
+#
+#####
+
+names = ' '.join([
+    'scale_x',
+    'scale_y',
+    'scale_z',
+    'leg_number',
+    'leg_auto_distance',
+    'leg_wanted_distance',
+    'leg_spread_angle',
+    'leg_custom_offset_x',
+    'leg_custom_offset_y',
+    'leg_custom_offset_z',
+])
+format = 'fffh?fffff'
+Creature = namedtuple('Creature', names)
+
+def get_creature_scale(data):
+    return (data.scale_x, data.scale_y, data.scale_z)
+
+#####
+#
+# Generate creature
+#
+#####
+
+def clean_objects():
+    for obj in bpy.context.scene.objects:
+        obj.select_set(True)
+
+    bpy.ops.object.delete()
+
+def min(a, b):
+    return a if a < b else b
+
+def abs(x):
+    return -x if x < 0 else x
+
+def generate_creature(data):
+    leg_joints = [
+        Vector((0, 1.7, 2)),
+        Vector((0, 5, 0.2)),
+        Vector((0, 5, -(data.scale_z / 2 + 4)))
+    ]
     #bpy.ops.object.mode_set(mode='OBJECT')
 
     # Create creature body
     
     bpy.ops.mesh.primitive_cube_add(
-        location=creature_location.to_tuple(),
-        scale=creature_scale.to_tuple()
+        location=(0, 0, 0),
+        scale=get_creature_scale(data)
     )
     
     body = bpy.context.active_object
@@ -85,16 +115,16 @@ def generate_creature(
     
     # Leg pre-computed variables
     
-    leg_distance = (creature_scale.x - 2 * abs(leg_custom_offset.x)) / leg_number\
-        if leg_wanted_distance < 0\
-        else min(leg_wanted_distance, (creature_scale.x - 2 * abs(leg_custom_offset.x)) / leg_number)
-    leg_offset = Vector((-leg_distance * (leg_number - 1) / 2, creature_scale.y / 2, 0))
-    leg_angle_increment_value = leg_spread_angle / (leg_number - 1)
-    leg_current_angle = leg_spread_angle / 2
+    leg_distance = (data.scale_x - 2 * abs(data.leg_custom_offset_x)) / data.leg_number\
+        if data.leg_auto_distance\
+        else min(data,leg_wanted_distance, (data.scale_x - 2 * abs(data.leg_custom_offset_x)) / data.leg_number)
+    leg_offset = Vector((-leg_distance * (data.leg_number - 1) / 2, data.scale_y / 2, 0))
+    leg_angle_increment_value = data.leg_spread_angle / (data.leg_number - 1)
+    leg_current_angle = data.leg_spread_angle / 2
     
     # Legs generation loop
     
-    for i in range(leg_number):
+    for i in range(data.leg_number):
         
         # Generate mesh and Blender object
         
@@ -108,9 +138,9 @@ def generate_creature(
         # Root of the leg
 
         root = bm.verts.new((
-            i * leg_distance + leg_offset.x + leg_custom_offset.x,
-            leg_offset.y + leg_custom_offset.y,
-            leg_offset.z + leg_custom_offset.z
+            i * leg_distance + leg_offset.x + data.leg_custom_offset_x,
+            leg_offset.y + data.leg_custom_offset_y,
+            leg_offset.z + data.leg_custom_offset_z
         ))
         
         previous_vertice = root
@@ -166,15 +196,17 @@ def generate_creature(
     
         # Link to scene
     
-        obj.location = creature_location.to_tuple()
+        obj.location = (0, 0, 0)
         bpy.context.scene.collection.objects.link(obj)
 
-clean_objects()
+#####
+#
+# Main
+#
+#####
 
-a = 7
-bin = f'{a:08b}'
-print(bin)
-print(type(bin))
-res = int(bin, 2)
-print("res: ", res)
-generate_creature()
+data = struct.pack(format, 15, 3, 4, 8, True, 0, 60, -2, 1, 2)
+c = Creature._make(struct.unpack(format, data))
+
+clean_objects()
+generate_creature(c)
