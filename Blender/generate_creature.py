@@ -3,8 +3,12 @@ import bmesh
 from mathutils import Matrix, Vector
 from math import radians
 
+class Creature(tup):
+    leg_number = tup[0]
+    #TODO
+    
 def clean_objects():
-    bpy.ops.object.mode_set(mode='OBJECT')
+    #bpy.ops.object.mode_set(mode='OBJECT')
     
     for obj in bpy.context.scene.objects:
         obj.select_set(True)
@@ -16,7 +20,7 @@ def min(a, b):
 
 def abs(x):
     return -x if x < 0 else x
-    
+
 def selection():
     return
 
@@ -38,29 +42,32 @@ def recombine(g):
 def generate_generations():
     population = init_population(0)
     population = evaluate_population(0)
+    #population précédente et population actuel a stocké 
     for i in range(1, 50):
-        population = selection(i)
+        population = selection(i-1)
         population = recombine(i)
         population = mutation(i)
         population = evaluate(i)
-    
+        
     #generate_creatre(population???)
     return 
+
 def generate_creature(
-    creature_location = Vector((0, 0, 0)),
+    creature_location = Vector((0, 0, 0)), 
     creature_scale = Vector((15, 3, 4)),
     leg_number = 8,
     leg_wanted_distance = -1,
     leg_spread_angle = 60,
-    leg_joints = [
-        Vector((0, 1.7, 2)),
-        Vector((0, 5, 0.2)),
-        Vector((0, 5, -(creature_scale.z / 2 + 4)))
-    ],
+    leg_joints = None,
     leg_custom_offset = Vector((-2, 1, 2))
 ):
-    
-    bpy.ops.object.mode_set(mode='OBJECT')
+    if leg_joints is None:
+        leg_joints = [
+            Vector((0, 1.7, 2)),
+            Vector((0, 5, 0.2)),
+            Vector((0, 5, -(creature_scale.z / 2 + 4)))
+        ]
+    #bpy.ops.object.mode_set(mode='OBJECT')
 
     # Create creature body
     
@@ -162,7 +169,12 @@ def generate_creature(
         obj.location = creature_location.to_tuple()
         bpy.context.scene.collection.objects.link(obj)
 
+clean_objects()
+
 a = 7
 bin = f'{a:08b}'
 print(bin)
-#generate_creature()
+print(type(bin))
+res = int(bin, 2)
+print("res: ", res)
+generate_creature()
