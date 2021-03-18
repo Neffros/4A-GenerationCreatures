@@ -21,8 +21,21 @@ def update_bit(num, i, bit):
 def selection():
     return
 
-def init_population(g):
-    return
+# Create 
+def init_population(element_size, population_size):
+    population = []
+    
+    for n in range(population_size):
+        element = bytearray(element_size)
+        
+        for i in range(len(byte_array)):
+            for j in range(8):
+                # rand bool à la place du True
+                element[i] = update_bit(element[i], j, True)
+        
+        population.append(element)
+    
+    return population
 
 def evaluate_population(g): #get fitness value
     return
@@ -36,12 +49,12 @@ def evaluate(g):
 def recombine(g):
     return
 
-def generate_generations():
-    population = init_population(0)
+def generate_generations(element_size):
+    population = init_population(element_size, 10)
     population = evaluate_population(0)
     #population précédente et population actuel a stocké 
     for i in range(1, 50):
-        population = selection(i-1)
+        population = selection(population)
         population = recombine(i)
         population = mutation(i)
         population = evaluate(i)
@@ -56,18 +69,18 @@ def generate_generations():
 #####
 
 names = ' '.join([
+    'leg_auto_distance',
+    'leg_number',
     'scale_x',
     'scale_y',
     'scale_z',
-    'leg_number',
-    'leg_auto_distance',
     'leg_wanted_distance',
     'leg_spread_angle',
     'leg_custom_offset_x',
     'leg_custom_offset_y',
     'leg_custom_offset_z',
 ])
-format = 'fffh?fffff'
+format = '?hffffffff'
 Creature = namedtuple('Creature', names)
 
 def get_creature_scale(data):
@@ -205,7 +218,7 @@ def generate_creature(data):
 #
 #####
 
-data = struct.pack(format, 15, 3, 4, 8, True, 0, 60, -2, 1, 2)
+data = struct.pack(format, True, 8, 15, 3, 4, 0, 60, -2, 1, 2)
 c = Creature._make(struct.unpack(format, data))
 
 clean_objects()
