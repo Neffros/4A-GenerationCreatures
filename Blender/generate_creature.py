@@ -16,7 +16,36 @@ def min(a, b):
 
 def abs(x):
     return -x if x < 0 else x
+    
+def selection():
+    return
 
+def init_population(g):
+    return
+
+def evaluate_population(g): #get fitness value
+    return
+
+def mutation(g):
+    return
+
+def evaluate(g):
+    return
+
+def recombine(g):
+    return
+
+def generate_generations():
+    population = init_population(0)
+    population = evaluate_population(0)
+    for i in range(1, 50):
+        population = selection(i)
+        population = recombine(i)
+        population = mutation(i)
+        population = evaluate(i)
+    
+    #generate_creatre(population???)
+    return 
 def generate_creature(
     creature_location = Vector((0, 0, 0)),
     creature_scale = Vector((15, 3, 4)),
@@ -133,5 +162,7 @@ def generate_creature(
         obj.location = creature_location.to_tuple()
         bpy.context.scene.collection.objects.link(obj)
 
-clean_objects()
-generate_creature()
+a = 7
+bin = f'{a:08b}'
+print(bin)
+#generate_creature()
