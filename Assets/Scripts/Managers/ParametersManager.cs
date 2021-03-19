@@ -7,9 +7,9 @@ public class ParametersManager : MonoBehaviour
 {
     #region Variables statiques
 
-    private static readonly string _scriptPath = @"D:\Projects\Unity\4A-GenerationCreatures\Blender\script.py";
+    private static readonly string _scriptPath = @"E:\Unity\4A-GenerationCreatures\Blender\script.py";
 
-    private static readonly string _BATPath = @"D:\Projects\Unity\4A-GenerationCreatures\Blender\exec.bat";
+    private static readonly string _BATPath = @"E:\Unity\4A-GenerationCreatures\Blender\exec.bat";
 
     #endregion
 
@@ -39,10 +39,10 @@ public class ParametersManager : MonoBehaviour
 
     [SerializeField]
     private float _legSpreadAngle = 0f;
-
+   
     [SerializeField]
     private Vector3 _legCustomOffset = Vector3.zero;
-
+    
     [Space]
     [SerializeField]
     private string _fileName = "CreatureParameters";

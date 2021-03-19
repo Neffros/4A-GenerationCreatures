@@ -41,7 +41,7 @@ data = struct.pack(format,
     5,
     2,
     3,
-    1.2,
+    1,2,
     40,
     0,
     0,
@@ -183,4 +183,4 @@ def generate_creature(data):
 
 clean_objects()
 generate_creature(c)
-bpy.ops.export_scene.fbx(filepath="D:/Projects/Unity/4A-GenerationCreatures/Assets\Prefabs/creature.fbx", axis_forward="-Z", axis_up="Y")
+bpy.ops.export_scene.fbx(filepath="E:/Unity/4A-GenerationCreatures/Assets\Prefabs/creature.fbx", axis_forward="-Z", axis_up="Y")

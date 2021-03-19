@@ -1,1 +1,1 @@
-"D:\Applications\Blender\2.92\blender.exe" --background --python "D:\Projects\Unity\4A-GenerationCreatures\Blender\script.py"
+"E:\Blender\Blender\2.92\blender.exe" --background --python "E:\Unity\4A-GenerationCreatures\Blender\script.py"

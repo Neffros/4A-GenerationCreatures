@@ -19,6 +19,5 @@ public class ParametersManagerEditor : Editor
         if (GUILayout.Button("Generate creature"))
             instance.GenerateMesh();
     }
-
     #endregion
 }
