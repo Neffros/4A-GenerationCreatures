@@ -13,7 +13,7 @@
             <e p="ParametersManagerEditor.cs" t="Include" />
           </e>
           <e p="Entities" t="Include">
-            <e p="Parameters.cs" t="Include" />
+            <e p="Creature.cs" t="Include" />
           </e>
           <e p="GeneticAlgorithm.cs" t="Include" />
           <e p="Lib" t="Include">
