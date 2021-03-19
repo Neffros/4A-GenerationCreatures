@@ -68,34 +68,46 @@ public class GeneticAlgorithm : MonoBehaviour
         offset += newBits.Length;
         return allBits;
     }
-    
-    bool[][] Selection(bool[][] population, List<int> scores, int nbSelected)
-    {
-        bool[][] bestElements = new bool[nbSelected][];
-        
-        for (int i = 0; i < scores.Count; i++)
-        {
 
+    bool[] Tournament(bool[][] population, int[] scores, int steps)
+    {
+        int selected = Random.Range(0, population.Length);
+
+        for (int i = 0; i < steps; i++)
+        {
+            int index = Random.Range(0, population.Length);
+
+            if (scores[selected] < scores[index])
+                selected = index;
         }
+
+        return population[selected];
+    }
+    
+    bool[][] Selection(bool[][] population, int[] scores, int selected)
+    {
+        bool[][] bestElements = new bool[population.Length][];
+
+        for (int n = 0; n < selected; n++)
+            bestElements[n] = Tournament(population, scores, 4);
 
         return bestElements;
     }
 
-    List<int> Evaluate(bool[][] population, bool[] bitsBaseProperties)
+    int[] Evaluate(bool[][] population, bool[] bitsBaseProperties)
     {
-        List<int> creatureScores = new List<int>();
-        foreach (var creature in population)
+        int[] creatureScores = new int[population.Length];
+
+        for (int n = 0; n < population.Length; n++)
         {
             int score = 0;
-
-            for (int i = 0; i < bitsBaseProperties.Length; i++)//ushort 
+            
+            for (int i = 0; i < bitsBaseProperties.Length; i++)
             {
-                if (creature[i] == bitsBaseProperties[i])
-                {
+                if (population[n][i] == bitsBaseProperties[i])
                     score++;
-                }
             }
-            creatureScores.Add(score);
+            creatureScores[n] = score;
         }
 
         return creatureScores;
@@ -136,15 +148,23 @@ public class GeneticAlgorithm : MonoBehaviour
     {
         bool[] properties = InitBitArrayFromParams();
         bool[][] population = InitPopulation(20, properties.Length);
-        List<int> scores = Evaluate(population, properties);
+        int[] scores = Evaluate(population, properties);
+        population = Selection(population, scores, 5);
 
-        for (int i = 1; i < 50; i++)
+        for (int j = 0; j < population.Length; j++)
+        {
+            for (int i = 0; i < population[j].Length; i++)
+                Debug.Log(population[j][i]);
+            Debug.Log("size: " +  population[j].Length);
+        }
+
+        /*for (int i = 1; i < 50; i++)
         {
             population = Selection(population, scores, 5);
             //Recombine(i)
             //Mutation(gen)
             scores = Evaluate(population, properties);
-        }
+        }*/
         return null;
     }
 
