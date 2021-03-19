@@ -1,0 +1,1 @@
+"BLENDER_EXEC" --background --python "SCRIPT_PATH"
