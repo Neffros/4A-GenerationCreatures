@@ -142,8 +142,6 @@ public class ParametersManager : MonoBehaviour
         {
             string contents = File.ReadAllText(this._scriptTemplatePath);
 
-            Debug.Log(Path.Combine(Application.persistentDataPath, string.Concat("script-", name, ".fbx")));
-
             contents = contents
                 .Replace("LEG_NUMBER", this._legNumber.ToString())
                 .Replace("LEG_AUTO_DISTANCE", this._legAutoDistance.ToString())

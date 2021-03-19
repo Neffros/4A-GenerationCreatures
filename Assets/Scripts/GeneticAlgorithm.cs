@@ -13,7 +13,6 @@ public class GeneticAlgorithm : MonoBehaviour
     float legCustomOffsetX = 10.5f;
     private float _legWantedDistance = 3f;
     private float _legSpreadAngle = 4f;
-    int offset = 0;
 
     bool[] InitBitArrayFromParams()
     {
@@ -29,43 +28,48 @@ public class GeneticAlgorithm : MonoBehaviour
         var bitsLegWantedDistance = new BitArray(bytesLegWantedDistance);
         var bitsLegSpreadAngle = new BitArray(bytesLegSpreadAngle);
         
-        var allBits = new bool[bitsScaleX.Length + bitsLegNumber.Length + bitsLegCustomOffsetX.Length + 
+        var allBits = new bool[bitsLegNumber.Length + bitsScaleX.Length + bitsLegCustomOffsetX.Length + 
                                bitsLegWantedDistance.Length + bitsLegSpreadAngle.Length];
+        int offset = 0;
 
-        //ushort, float, float ,float , float 
-        allBits = AppendToAllBits(allBits, bitsScaleX);
-        allBits = AppendToAllBits(allBits, bitsLegNumber);
-        allBits = AppendToAllBits(allBits, bitsLegCustomOffsetX);
-        allBits = AppendToAllBits(allBits, bitsLegWantedDistance);
-        allBits = AppendToAllBits(allBits, bitsLegSpreadAngle);
+        //ushort, float, float ,float , float
+        allBits = AppendToAllBits(allBits, bitsLegNumber, offset);
+        offset += bitsLegNumber.Length;
+
+        allBits = AppendToAllBits(allBits, bitsScaleX, offset);
+        offset += bitsScaleX.Length;
+
+        allBits = AppendToAllBits(allBits, bitsLegCustomOffsetX, offset);
+        offset += bitsLegCustomOffsetX.Length;
+
+        allBits = AppendToAllBits(allBits, bitsLegWantedDistance, offset);
+        offset += bitsLegWantedDistance.Length;
+        
+        allBits = AppendToAllBits(allBits, bitsLegSpreadAngle, offset);
 
         return allBits;
     }
     
     Byte[] ConvertBitsToBytes(bool[] allBits)
     {
-        Byte[] bytes = new byte[allBits.Length/8];
-        var currByte = new byte[1];
+        var length = allBits.Length / 8;
+        Byte[] bytes = new byte[length];
         BitArray currBits = new BitArray(8);
 
-        for (int i = 0, k = 0; i < allBits.Length; i+=8, k++)
+        for (int i = 0; i < length; i++)
         {
             for (int j = 0; j < 8; j++)
-            {
-                currBits[j] = allBits[i + j];
-            }
+                currBits[j] = allBits[i * 8 + j];
 
-            currBits.CopyTo(currByte, 0);
-
-            currByte.CopyTo(bytes, k);
+            currBits.CopyTo(bytes, i);
         }
+
         return bytes;
     }
 
-    bool[] AppendToAllBits(bool[] allBits, BitArray newBits)
+    bool[] AppendToAllBits(bool[] allBits, BitArray newBits, int offset)
     {
         newBits.CopyTo(allBits, offset);
-        offset += newBits.Length;
         return allBits;
     }
 
@@ -89,7 +93,7 @@ public class GeneticAlgorithm : MonoBehaviour
         bool[][] bestElements = new bool[population.Length][];
 
         for (int n = 0; n < selected; n++)
-            bestElements[n] = Tournament(population, scores, 4);
+            bestElements[n] = Tournament(population, scores, 7);
 
         return bestElements;
     }
@@ -133,65 +137,57 @@ public class GeneticAlgorithm : MonoBehaviour
 
     bool[] Recombine(bool[] parent, bool[] parent2)
     {
-        bool[] newCreature = (bool[])parent.Clone();
+        bool[] child = (bool[])parent.Clone();
         int line = Random.Range(1, parent.Length-1);
 
         for (int i = line; i < parent.Length; i++)
-        {
-            newCreature[i] = parent2[i];
-        }
-        return newCreature; 
+            child[i] = parent2[i];
+        
+        return child; 
     }
     bool[][] InitPopulation(int nbGeneratedCreatures, int dataSize)
     {
         bool[][] population = new bool[nbGeneratedCreatures][];
 
-
         for (int i = 0; i < nbGeneratedCreatures; i++)
         {
             population[i] = new bool[dataSize];
+
             for (int j = 0; j < dataSize; j++)
-            {
                 population[i][j] = Random.Range(0, 2) != 0;
-            }
         }
-        /*for (int i = 0; i < population[0].Length; i++)
-        {
-            Debug.Log(population[0][i]);
-        }
-        
-        Debug.Log("size: " +  population[0].Length);*/
+
         return population;
     }
 
-    BitArray[] GenerateGenerations()
+    bool[] GenerateGenerations()
     {
         bool[] properties = InitBitArrayFromParams();
-        bool[][] population = InitPopulation(20, properties.Length);
-        List<int> scores = Evaluate(population, properties);
-        int rand = 0;
+        bool[][] population = InitPopulation(40, properties.Length);
+        int[] scores = Evaluate(population, properties);
+
+        int rand;
         bool[] parent;
         bool[] parent2;
-        int[] scores = Evaluate(population, properties);
-        population = Selection(population, scores, 5);
-
-
-        /*for (int i = 1; i < 50; i++)
+        
+        for (int i = 1; i < 200; i++)
         {
-            population = Selection(population, scores, 5);
+            population = Selection(population, scores, 10);
           
-            for (int j = 5; j < 20; j++) // 15 is population size missing after selection 
+            for (int j = 10; j < 40; j++)
             {
-                rand = Random.Range(0, 5);
+                rand = Random.Range(0, 10);
                 parent = population[rand];
-                rand = Random.Range(0, 5);
+                rand = Random.Range(0, 10);
                 parent2 = population[rand];
                 population[j] = Recombine(parent, parent2);
             }
+
             Mutation(population, 10);
             scores = Evaluate(population, properties);
-        }*/
-        return null;
+        }
+
+        return Selection(population, scores, 1)[0];
     }
 
 
@@ -199,7 +195,21 @@ public class GeneticAlgorithm : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GenerateGenerations();
+        bool[] allBits = InitBitArrayFromParams();
+        Byte[] bytes = ConvertBitsToBytes(allBits);
+        float test = BitConverter.ToSingle(bytes, 2);
+        Byte[] f = BitConverter.GetBytes(this.scaleX);
+        float r = BitConverter.ToSingle(f, 0);
+
+        bool[] element = GenerateGenerations();
+
+        Byte[] currByteCreature = ConvertBitsToBytes(element);
+
+        ushort legNumber = BitConverter.ToUInt16(currByteCreature, 0);
+        float scaleX = BitConverter.ToSingle(currByteCreature, 2);
+        float legCustomOffsetX = BitConverter.ToSingle(currByteCreature, 6);
+        float _legWantedDistance = BitConverter.ToSingle(currByteCreature, 10);
+        float _legSpreadAngle = BitConverter.ToSingle(currByteCreature, 14);
     }
 
     // Update is called once per frame
