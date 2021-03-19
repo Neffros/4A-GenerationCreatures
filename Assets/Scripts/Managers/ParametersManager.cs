@@ -3,13 +3,18 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class ParametersManager : MonoBehaviour
 {
     #region Variables statiques
 
-    private static readonly string _scriptPath = @"E:\Unity\4A-GenerationCreatures\Blender\script.py";
+    private static ParametersManager _instance = null;
 
-    private static readonly string _BATPath = @"E:\Unity\4A-GenerationCreatures\Blender\exec.bat";
+    #endregion
+
+    #region Propriétés statiques
+
+    public static ParametersManager Instance => ParametersManager._instance;
 
     #endregion
 
@@ -45,10 +50,28 @@ public class ParametersManager : MonoBehaviour
     
     [Space]
     [SerializeField]
+    private int _creatureNb = 10;
+
+    [SerializeField]
     private string _fileName = "CreatureParameters";
 
     [SerializeField]
-    private Parameters _data = null;
+    private Creature _customData = null;
+
+    #endregion
+
+    #region Fonctions Unity
+
+    private void Awake()
+    {
+        ParametersManager._instance = this;
+    }
+
+    private void OnDestroy()
+    {
+        if (ParametersManager._instance == this)
+            ParametersManager._instance = null;
+    }
 
     #endregion
 
@@ -56,20 +79,12 @@ public class ParametersManager : MonoBehaviour
 
     public void LoadData()
     {
-        if (this._data != null)
-        {
-            this._scale = this._data.Scale;
-            this._legNumber = this._data.LegNumber;
-            this._legAutoDistance = this._data.LegAutoDistance;
-            this._legWantedDistance = this._data.LegWantedDistance;
-            this._legSpreadAngle = this._data.LegSpreadAngle;
-            this._legCustomOffset = this._data.LegCustomOffset;
-        }
+        this.Load(this._customData);
     }
 
     public void SaveData()
     {
-        Parameters asset = ScriptableObject.CreateInstance<Parameters>();
+        Creature asset = ScriptableObject.CreateInstance<Creature>();
 
         asset.Scale = this._scale;
         asset.LegNumber = this._legNumber;
@@ -78,30 +93,56 @@ public class ParametersManager : MonoBehaviour
         asset.LegSpreadAngle = this._legSpreadAngle;
         asset.LegCustomOffset = this._legCustomOffset;
 
-        AssetDatabase.CreateAsset(asset, string.Concat("Assets/Data/", this._fileName, ".asset"));
-        AssetDatabase.SaveAssets();
-
-        EditorUtility.FocusProjectWindow();
-
-        Selection.activeObject = asset;
+        asset.Save(this._fileName);
     }
 
-    public void GenerateMesh()
+    public void GenerateCreatures()
     {
-        this.GenerateScript();
-        this.GenerateBatFile();
-        this.ImportMesh();
+        for (int i = 0; i < this._creatureNb; i++)
+        {
+            GameObject creature = this.GenerateMesh();
+            creature.transform.position = new Vector3(i * 10, 0, 0);
+        }
+    }
+
+    public void ComputeGeneticAlgorithm()
+    {
+        this.Load(this._customData.ComputeGeneticAlgorithm());
     }
 
     #endregion
 
     #region Fonctions privées
 
-    private void GenerateScript()
+    private void Load(Creature data)
+    {
+        if (data != null)
+        {
+            this._scale = data.Scale;
+            this._legNumber = data.LegNumber;
+            this._legAutoDistance = data.LegAutoDistance;
+            this._legWantedDistance = data.LegWantedDistance;
+            this._legSpreadAngle = data.LegSpreadAngle;
+            this._legCustomOffset = data.LegCustomOffset;
+        }
+    }
+
+    private GameObject GenerateMesh()
+    {
+        string name = Guid.NewGuid().ToString();
+
+        this.GenerateScript(name);
+        this.GenerateBatFile(name);
+        return this.CreateAndImportMesh(name);
+    }
+
+    private void GenerateScript(string name)
     {
         if (File.Exists(this._scriptTemplatePath))
         {
             string contents = File.ReadAllText(this._scriptTemplatePath);
+
+            Debug.Log(Path.Combine(Application.persistentDataPath, string.Concat("script-", name, ".fbx")));
 
             contents = contents
                 .Replace("LEG_NUMBER", this._legNumber.ToString())
@@ -114,13 +155,13 @@ public class ParametersManager : MonoBehaviour
                 .Replace("LEG_CUSTOM_OFFSET_X", this._legCustomOffset.x.ToString())
                 .Replace("LEG_CUSTOM_OFFSET_Y", this._legCustomOffset.y.ToString())
                 .Replace("LEG_CUSTOM_OFFSET_Z", this._legCustomOffset.z.ToString())
-                .Replace("FBX_EXPORT_PATH", Path.Combine(Application.dataPath, "Prefabs/creature.fbx"));
+                .Replace("FBX_EXPORT_PATH", Path.Combine(Application.dataPath, "Prefabs", string.Concat("creature-", name, ".fbx")));
 
-            File.WriteAllText(ParametersManager._scriptPath, contents);
+            File.WriteAllText(Path.Combine(Application.persistentDataPath, string.Concat("script-", name, ".py")), contents);
         }
     }
 
-    private void GenerateBatFile()
+    private void GenerateBatFile(string name)
     {
         if (File.Exists(this._BATTemplatePath))
         {
@@ -128,27 +169,29 @@ public class ParametersManager : MonoBehaviour
 
             contents = contents
                 .Replace("BLENDER_EXEC", this._blenderExecPath)
-                .Replace("SCRIPT_PATH", ParametersManager._scriptPath);
+                .Replace("SCRIPT_PATH", Path.Combine(Application.persistentDataPath, string.Concat("script-", name, ".py")));
 
-            File.WriteAllText(ParametersManager._BATPath, contents);
+            File.WriteAllText(Path.Combine(Application.persistentDataPath, string.Concat("exec-", name, ".bat")), contents);
         }
     }
 
-    private void ImportMesh()
+    private GameObject CreateAndImportMesh(string name)
     {
         try
         {
-            ProcessManager.Launch(ParametersManager._BATPath);
+            ProcessManager.Launch(Path.Combine(Application.persistentDataPath, string.Concat("exec-", name, ".bat")));
 
-            AssetDatabase.ImportAsset("Assets/Prefabs/creature.fbx");
-            GameObject asset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/creature.fbx");
+            AssetDatabase.ImportAsset(string.Concat("Assets/Prefabs/", "creature-", name, ".fbx"));
+            GameObject asset = AssetDatabase.LoadAssetAtPath<GameObject>(string.Concat("Assets/Prefabs/", "creature-", name, ".fbx"));
 
             if (asset)
-                GameObject.Instantiate(asset);
+                return GameObject.Instantiate(asset);
+            return null;
         }
         catch (Exception e)
         {
             Debug.LogError(e);
+            return null;
         }
     }
 
