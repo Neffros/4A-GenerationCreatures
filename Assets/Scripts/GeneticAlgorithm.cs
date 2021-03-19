@@ -7,8 +7,8 @@ using UnityEngine;
 public class GeneticAlgorithm : MonoBehaviour
 {
     
-    float scaleX = 5f;
     ushort legNumber = 3;
+    float scaleX = 5f;
     float legCustomOffsetX = 10.5f;
     private float _legWantedDistance = 3f;
     private float _legSpreadAngle = 4f;
@@ -16,14 +16,14 @@ public class GeneticAlgorithm : MonoBehaviour
 
     bool[] InitBitArrayFromParams()
     {
-        Byte[] bytesScaleX = BitConverter.GetBytes(scaleX);
         Byte[] bytesLegNumber = BitConverter.GetBytes(legNumber);
+        Byte[] bytesScaleX = BitConverter.GetBytes(scaleX);
         Byte[] bytesLegCustomOffsetX = BitConverter.GetBytes(legCustomOffsetX);
         Byte[] bytesLegWantedDistance = BitConverter.GetBytes(_legWantedDistance);
         Byte[] bytesLegSpreadAngle = BitConverter.GetBytes(_legSpreadAngle);
         
-        var bitsScaleX = new BitArray(bytesScaleX);
         var bitsLegNumber = new BitArray(bytesLegNumber);
+        var bitsScaleX = new BitArray(bytesScaleX);
         var bitsLegCustomOffsetX = new BitArray(bytesLegCustomOffsetX);
         var bitsLegWantedDistance = new BitArray(bytesLegWantedDistance);
         var bitsLegSpreadAngle = new BitArray(bytesLegSpreadAngle);
@@ -31,6 +31,7 @@ public class GeneticAlgorithm : MonoBehaviour
         var allBits = new bool[bitsScaleX.Length + bitsLegNumber.Length + bitsLegCustomOffsetX.Length + 
                                bitsLegWantedDistance.Length + bitsLegSpreadAngle.Length];
 
+        //ushort, float, float ,float , float 
         allBits = AppendToAllBits(allBits, bitsScaleX);
         allBits = AppendToAllBits(allBits, bitsLegNumber);
         allBits = AppendToAllBits(allBits, bitsLegCustomOffsetX);
@@ -38,6 +39,26 @@ public class GeneticAlgorithm : MonoBehaviour
         allBits = AppendToAllBits(allBits, bitsLegSpreadAngle);
 
         return allBits;
+    }
+
+    Byte[] ConvertBitsToBytes(bool[] allBits)
+    {
+        Byte[] bytes = new byte[allBits.Length/8];
+        var currByte = new byte[1];
+        BitArray currBits = new BitArray(8);
+
+        for (int i = 0, k = 0; i < allBits.Length; i+=8, k++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                currBits[j] = allBits[i + j];
+            }
+
+            currBits.CopyTo(currByte, 0);
+
+            currByte.CopyTo(bytes, k);
+        }
+        return bytes;
     }
 
     bool[] AppendToAllBits(bool[] allBits, BitArray newBits)
@@ -97,7 +118,10 @@ public class GeneticAlgorithm : MonoBehaviour
             Debug.Log(allBits[i]);
         }
         Debug.Log("size total: " + allBits.Length);
+        Byte[] bytes = ConvertBitsToBytes(allBits);
 
+        float test = BitConverter.ToSingle(bytes, 10);
+        Debug.Log(test);
         //GenerateGenerations()
 
         /*float scaleX = 5f;
