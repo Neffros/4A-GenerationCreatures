@@ -101,14 +101,34 @@ public class GeneticAlgorithm : MonoBehaviour
         return creatureScores;
     }
 
-    void Mutation(bool[][] selectedCreatures)
+    bool[][] Mutation(bool[][] selectedCreatures, int mutationChance)
     {
-        
+        int randomVal = 0;
+        for(int i = 0; i < selectedCreatures.Length; i++)
+        {
+            for (int j = 0; j < selectedCreatures[i].Length; j++)
+            {
+                randomVal = Random.Range(0, 101);
+                if (mutationChance > randomVal)
+                {
+                    selectedCreatures[i][j] = !selectedCreatures[i][j];
+                }
+            }
+        }
+
+        return selectedCreatures;
     }
 
-    void Recombine(BitArray[] g)
+    bool[] Recombine(bool[] parent, bool[] parent2)
     {
-        
+        bool[] newCreature = (bool[])parent.Clone();
+        int line = Random.Range(1, parent.Length-1);
+
+        for (int i = line; i < parent.Length; i++)
+        {
+            newCreature[i] = parent2[i];
+        }
+        return newCreature; 
     }
     bool[][] InitPopulation(int nbGeneratedCreatures, int dataSize)
     {
@@ -137,12 +157,22 @@ public class GeneticAlgorithm : MonoBehaviour
         bool[] properties = InitBitArrayFromParams();
         bool[][] population = InitPopulation(20, properties.Length);
         List<int> scores = Evaluate(population, properties);
-
+        int rand = 0;
+        bool[] parent;
+        bool[] parent2;
         for (int i = 1; i < 50; i++)
         {
             population = Selection(population, scores, 5);
-            //Recombine(i)
-            //Mutation(gen)
+          
+            for (int j = 5; j < 20; j++) // 15 is population size missing after selection 
+            {
+                rand = Random.Range(0, 5);
+                parent = population[rand];
+                rand = Random.Range(0, 5);
+                parent2 = population[rand];
+                population[j] = Recombine(parent, parent2);
+            }
+            Mutation(population, 10);
             scores = Evaluate(population, properties);
         }
         return null;
@@ -154,55 +184,6 @@ public class GeneticAlgorithm : MonoBehaviour
     void Start()
     {
         GenerateGenerations();
-        /*bool[] allBits = InitBitArrayFromParams();
-        for (int i = 0; i < allBits.Length; i++)
-        {
-            Debug.Log(allBits[i]);
-        }
-        Debug.Log("size total: " + allBits.Length);
-        Byte[] bytes = ConvertBitsToBytes(allBits);
-
-        float test = BitConverter.ToSingle(bytes, 10);
-        Debug.Log(test);
-        //GenerateGenerations()
-
-        /*float scaleX = 5f;
-        ushort legNumber = 3;
-        float legCustomOffsetX = 10.5f;
-        //Byte yannis = 1;
-        Byte[] bytesScaleX = BitConverter.GetBytes(scaleX);
-        Byte[] byteLegNumber = BitConverter.GetBytes(legNumber);
-        Byte[] byteLegCustomOffsetX = BitConverter.GetBytes(legCustomOffsetX);
-        
-        //get specific bits of bytearray
-        var bits = new BitArray(bytesScaleX);
-        /*for (int i = 0; i < bits.Length; i++)
-        {
-            Debug.Log(bits[i]);
-        }
-        Debug.Log("size float:" + bits.Length);
-        */
-        //var bitsShort = new BitArray(byteLegNumber);
-        /* for (int i = 0; i < bitsShort.Length; i++)
-         {
-             Debug.Log(bitsShort[i]);
-         }
-         Debug.Log("size short: " + bitsShort.Length);
-         */
-        //concatenate bytes to bit array
-        /*var allBits = new bool[bits.Length + bitsShort.Length];
-
-        int offset = 0;
-        bits.CopyTo(allBits, offset);
-        offset += bits.Length;
-        bitsShort.CopyTo(allBits, offset);
-        offset += bitsShort.Length;
-        for (int i = 0; i < allBits.Length; i++)
-        {
-            Debug.Log(allBits[i]);
-        }
-        Debug.Log("size total: " + allBits.Length);*/
-
     }
 
     // Update is called once per frame
