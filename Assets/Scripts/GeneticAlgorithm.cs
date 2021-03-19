@@ -69,7 +69,7 @@ public class GeneticAlgorithm : MonoBehaviour
         return allBits;
     }
     
-    bool[][] Selection(bool[][] population, bool[] bitsBaseProperties, int dataSize)
+    bool[][] Selection(bool[][] population, bool[] bitsBaseProperties, int dataSize, int nbSelected)
     {
         List<int> creatureScores = new List<int>();
         foreach (var creature in population)
@@ -86,6 +86,8 @@ public class GeneticAlgorithm : MonoBehaviour
             creatureScores.Add(score);
         }
 
+        Evaluate(creatureScores, nbSelected);
+        List<int> scores = new List<int>();
         int bestScore = 0;
         int bestScore2 = 0;
 
@@ -136,12 +138,19 @@ public class GeneticAlgorithm : MonoBehaviour
         CurrByteCreature = ConvertBitsToBytes(creature);
         */
     }
-    void Evaluate(BitArray[] generation)
+    List<int> Evaluate(List<int> creatureScores, int nbSelected)
     {
-        //TODO put score evaluation here instead of in selection 
+
+        creatureScores.Sort();
+        List<int> bestScores = new List<int>();
+        for (int i = creatureScores.Count; i > creatureScores.Count - nbSelected; i++)
+        {
+            bestScores.Add(creatureScores[i]);
+        }
+        return bestScores;
     }
 
-    void Mutation(BitArray[] generation)
+    void Mutation(bool[][] selectedCreatures)
     {
         
     }
@@ -163,12 +172,12 @@ public class GeneticAlgorithm : MonoBehaviour
                 population[i][j] = Random.Range(0, 2) != 0;
             }
         }
-        for (int i = 0; i < population[0].Length; i++)
+        /*for (int i = 0; i < population[0].Length; i++)
         {
             Debug.Log(population[0][i]);
         }
         
-        Debug.Log("size: " +  population[0].Length);
+        Debug.Log("size: " +  population[0].Length);*/
         return population;
     }
 
