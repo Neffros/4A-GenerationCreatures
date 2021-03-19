@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GeneticAlgorithm : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class GeneticAlgorithm : MonoBehaviour
 
         return allBits;
     }
-
+    
     Byte[] ConvertBitsToBytes(bool[] allBits)
     {
         Byte[] bytes = new byte[allBits.Length/8];
@@ -67,13 +68,77 @@ public class GeneticAlgorithm : MonoBehaviour
         offset += newBits.Length;
         return allBits;
     }
-    void Selection()
+    
+    bool[][] Selection(bool[][] population, bool[] bitsBaseProperties, int dataSize)
     {
+        List<int> creatureScores = new List<int>();
+        foreach (var creature in population)
+        {
+            int score = 0;
+
+            for (int i = 0; i < dataSize; i++)//ushort 
+            {
+                if (creature[i] == bitsBaseProperties[i])
+                {
+                    score++;
+                }
+            }
+            creatureScores.Add(score);
+        }
+
+        int bestScore = 0;
+        int bestScore2 = 0;
+
+        int bestScoreIndex = 0;
+        int bestScore2Index = 0; 
+        for(int i = 0; i < creatureScores.Count; i++)
+        {
+            if (bestScore < creatureScores[i])
+            {
+                bestScore = creatureScores[i];
+                bestScore2Index = bestScoreIndex;
+                bestScoreIndex = i; 
+                bestScore2 = bestScore;
+            }
+        }
         
+        bool[][] selectedCreatures = new bool[2][];
+        selectedCreatures[0] = population[bestScoreIndex];
+        selectedCreatures[1] = population[bestScore2Index];
+        //selectedCreatures.Append(population[bestScore2Index]);
+        //Debug.Log(selectedCreatures[0]);
+    
+        /*for (int i = 0; i < selectedCreatures[0].Length; i++)
+        {
+            Debug.Log(selectedCreatures[0][i]);
+        }
+        
+        Debug.Log("Score: " + bestScore);
+        Debug.Log("size: " +  selectedCreatures.Length);*/
+        return selectedCreatures;
+
+        /*
+         
+        Byte[] currByteCreature;
+
+        ushort legNumber = BitConverter.ToUInt16(currByteCreature, 0);
+            
+        float scaleX = BitConverter.ToSingle(currByteCreature, 2);
+        float legCustomOffsetX = BitConverter.ToSingle(currByteCreature, 6);
+        float _legWantedDistance = BitConverter.ToSingle(currByteCreature, 10);
+        float _legSpreadAngle = BitConverter.ToSingle(currByteCreature, 14);
+
+        foreach (var bit in bitsBaseProperties)
+        {
+            //bitsBaseProperties
+        }
+        
+        CurrByteCreature = ConvertBitsToBytes(creature);
+        */
     }
     void Evaluate(BitArray[] generation)
     {
-        
+        //TODO put score evaluation here instead of in selection 
     }
 
     void Mutation(BitArray[] generation)
@@ -85,15 +150,33 @@ public class GeneticAlgorithm : MonoBehaviour
     {
         
     }
-    void InitPopulation(uint elementSize, uint populationSize)
+    bool[][] InitPopulation(int nbGeneratedCreatures, int dataSize)
     {
+        bool[][] population = new bool[nbGeneratedCreatures][];
+
+
+        for (int i = 0; i < nbGeneratedCreatures; i++)
+        {
+            population[i] = new bool[dataSize];
+            for (int j = 0; j < dataSize; j++)
+            {
+                population[i][j] = Random.Range(0, 2) != 0;
+            }
+        }
+        for (int i = 0; i < population[0].Length; i++)
+        {
+            Debug.Log(population[0][i]);
+        }
         
-        
+        Debug.Log("size: " +  population[0].Length);
+        return population;
     }
 
     BitArray[] GenerateGenerations()
     {
-
+        bool[] allBits = InitBitArrayFromParams();
+        bool[][] population = InitPopulation(20, 144);
+        Selection(population,allBits, 144);
         //InitPopulation(50,10);
         //Evaluate(0);
         for (int i = 1; i < 50; i++)
@@ -111,8 +194,8 @@ public class GeneticAlgorithm : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        bool[] allBits = InitBitArrayFromParams();
+        GenerateGenerations();
+        /*bool[] allBits = InitBitArrayFromParams();
         for (int i = 0; i < allBits.Length; i++)
         {
             Debug.Log(allBits[i]);
