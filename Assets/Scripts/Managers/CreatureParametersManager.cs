@@ -4,17 +4,17 @@ using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class ParametersManager : MonoBehaviour
+public class CreatureParametersManager : MonoBehaviour
 {
     #region Variables statiques
 
-    private static ParametersManager _instance = null;
+    private static CreatureParametersManager _instance = null;
 
     #endregion
 
     #region Propriétés statiques
 
-    public static ParametersManager Instance => ParametersManager._instance;
+    public static CreatureParametersManager Instance => CreatureParametersManager._instance;
 
     #endregion
 
@@ -64,13 +64,13 @@ public class ParametersManager : MonoBehaviour
 
     private void Awake()
     {
-        ParametersManager._instance = this;
+        CreatureParametersManager._instance = this;
     }
 
     private void OnDestroy()
     {
-        if (ParametersManager._instance == this)
-            ParametersManager._instance = null;
+        if (CreatureParametersManager._instance == this)
+            CreatureParametersManager._instance = null;
     }
 
     #endregion
@@ -108,6 +108,7 @@ public class ParametersManager : MonoBehaviour
     public void ComputeGeneticAlgorithm()
     {
         this.Load(this._customData.ComputeGeneticAlgorithm());
+        // this.GenerateCreatures();
     }
 
     #endregion

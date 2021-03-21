@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8b69f5332a7d7640b8d07cb14704bf2, type: 3}
   m_Name: CreatureParameters
   m_EditorClassIdentifier: 
-  _scale: {x: 5, y: 2, z: 3}
-  _legNumber: 3
-  _legAutoDistance: 0
-  _legWantedDistance: 1.2
-  _legSpreadAngle: 40
-  _legCustomOffset: {x: 0, y: 0, z: 0}
+  _scale: {x: 4.015625, y: 120, z: 3}
+  _legNumber: 67
+  _legAutoDistance: 1
+  _legWantedDistance: 2.784873e-10
+  _legSpreadAngle: 7.3786976e+20
+  _legCustomOffset: {x: 3.5735057e-36, y: 2.2747467e-24, z: 1.285697e-38}

@@ -1,16 +1,20 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ParametersManager))]
-public class ParametersManagerEditor : Editor
+[CustomEditor(typeof(CreatureParametersManager))]
+public class CreatureParametersManagerEditor : Editor
 {
     #region Fonctions publiques
 
     public override void OnInspectorGUI()
     {
-        ParametersManager instance = (ParametersManager)this.target;
+        CreatureParametersManager instance = (CreatureParametersManager)this.target;
 
         this.DrawDefaultInspector();
+
+        // TODO: don't draw default inspector and manage all inputs here
+        // If instance scriptable object (_customData) is not null, bind inputs to it
+        // Add inputs for genetic algorithm parameters and scriptable object management
         
         GUILayout.Space(5);
 
