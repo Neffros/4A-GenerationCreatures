@@ -5885,7 +5885,7 @@ MonoBehaviour:
   _legCustomOffset: {x: 3.5735057e-36, y: 2.2747467e-24, z: 1.285697e-38}
   _creatureNb: 2
   _fileName: CreatureParameters
-  _customData: {fileID: 0}
+  _customData: {fileID: 11400000, guid: 429718c9e9cca484eb33476dafc8391d, type: 2}
 --- !u!4 &1177741494
 Transform:
   m_ObjectHideFlags: 0
