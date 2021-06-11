@@ -20,6 +20,7 @@ public class CreatureParametersManager : MonoBehaviour
 
     #region Variables Unity
 
+    [Header("File Paths")]
     [SerializeField]
     private string _blenderExecPath = @"D:\Applications\Blender\2.92\blender.exe";
 
@@ -30,6 +31,7 @@ public class CreatureParametersManager : MonoBehaviour
     private string _BATTemplatePath = @"D:\Projects\Unity\4A-GenerationCreatures\Blender\template.bat";
 
     [Space]
+    [Header("Creature Parameters")]
     [SerializeField]
     private Vector3 _scale = Vector3.zero;
 
@@ -44,19 +46,37 @@ public class CreatureParametersManager : MonoBehaviour
 
     [SerializeField]
     private float _legSpreadAngle = 0f;
-   
+
     [SerializeField]
     private Vector3 _legCustomOffset = Vector3.zero;
-    
+
+    [Space]
+    [Header("Genetic Algorithm Parameters")]
+    [SerializeField]
+    private int _generations = 300;
+
+    [SerializeField]
+    private int _populationSize = 150;
+
+    [SerializeField]
+    private int _tournaments = 100;
+
+    [SerializeField]
+    private int _rounds = 10;
+
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float _mutationRate = .01f;
+
     [Space]
     [SerializeField]
     private int _creatureNb = 10;
 
     [SerializeField]
-    private string _fileName = "CreatureParameters";
+    private string _creatureFileName = "CreatureParameters";
 
     [SerializeField]
-    private Creature _customData = null;
+    private Creature _creatureCustomData = null;
 
     #endregion
 
@@ -77,12 +97,12 @@ public class CreatureParametersManager : MonoBehaviour
 
     #region Fonctions publiques
 
-    public void LoadData()
+    public void LoadCreatureData()
     {
-        this.Load(this._customData);
+        this.Load(this._creatureCustomData);
     }
 
-    public void SaveData()
+    public void SaveCreatureData()
     {
         Creature asset = ScriptableObject.CreateInstance<Creature>();
 
@@ -93,7 +113,7 @@ public class CreatureParametersManager : MonoBehaviour
         asset.LegSpreadAngle = this._legSpreadAngle;
         asset.LegCustomOffset = this._legCustomOffset;
 
-        asset.Save(this._fileName);
+        asset.Save(this._creatureFileName);
     }
 
     public void GenerateCreatures()
@@ -107,8 +127,17 @@ public class CreatureParametersManager : MonoBehaviour
 
     public void ComputeGeneticAlgorithm()
     {
-        this.Load(this._customData.ComputeGeneticAlgorithm());
-        // this.GenerateCreatures();
+        Creature data = GA.Generate(
+            this._creatureCustomData,
+            this._generations,
+            this._populationSize,
+            this._tournaments,
+            this._rounds,
+            this._mutationRate
+        );
+
+        this.Load(data);
+        //this.GenerateCreatures();
     }
 
     #endregion

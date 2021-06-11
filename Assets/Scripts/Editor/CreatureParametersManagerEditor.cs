@@ -19,9 +19,9 @@ public class CreatureParametersManagerEditor : Editor
         GUILayout.Space(5);
 
         if (GUILayout.Button("Save data to ScriptableObject"))
-            instance.SaveData();
+            instance.SaveCreatureData();
         if (GUILayout.Button("Load data from ScriptableObject"))
-            instance.LoadData();
+            instance.LoadCreatureData();
         
         GUILayout.Space(5);
         
