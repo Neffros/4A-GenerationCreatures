@@ -1,5 +1,6 @@
 import bpy
 import bmesh
+import random
 import struct
 from collections import namedtuple
 from mathutils import Matrix, Vector
@@ -34,7 +35,7 @@ def get_creature_scale(data):
 # Create data
 #
 #####
-
+'''
 data = struct.pack(format,
     LEG_AUTO_DISTANCE,
     LEG_NUMBER,
@@ -46,6 +47,19 @@ data = struct.pack(format,
     LEG_CUSTOM_OFFSET_X,
     LEG_CUSTOM_OFFSET_Y,
     LEG_CUSTOM_OFFSET_Z
+)
+'''
+data = struct.pack(format,
+    True,
+    4,
+    1,
+    1,
+    1,
+    0,
+    70,
+    0,
+    0,
+    0
 )
 c = Creature._make(struct.unpack(format, data))
 
@@ -155,6 +169,15 @@ def generate_creature(data):
         
         bm.to_mesh(mesh)
         
+        # Assign material
+        
+        mat = bpy.data.materials.new(name="Material")
+        
+        for i in range(3):
+            mat.diffuse_color[i] = random.random()
+        
+        obj.data.materials.append(mat)
+        
         # Add skin
             
         skin = obj.modifiers.new(name="Skin", type='SKIN')
@@ -183,4 +206,4 @@ def generate_creature(data):
 
 clean_objects()
 generate_creature(c)
-bpy.ops.export_scene.fbx(filepath="FBX_EXPORT_PATH", axis_forward="-Z", axis_up="Y")
+'''bpy.ops.export_scene.fbx(filepath="FBX_EXPORT_PATH", axis_forward="-Z", axis_up="Y")'''
