@@ -29,9 +29,9 @@ public sealed class MLP<TInput, TOutput>
 
     public void Update(object inputs)
     {
-        int p = layers[0][layers[0].Count - 1];
+        /*int p = layers[0][layers[0].Count - 1];
         layers[0].Clear();
-        layers[0].
+        layers[0].*/
         // [[0, 0], 0]
     }
 }

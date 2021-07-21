@@ -17,6 +17,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CreatureParametersManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Lib/ProcessManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Lib/Neural Network/MLP.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -75,6 +76,7 @@
       <workItem from="1616143721261" duration="18457000" />
       <workItem from="1616166428884" duration="1858000" />
       <workItem from="1623140072157" duration="99000" />
+      <workItem from="1626871551629" duration="237000" />
     </task>
     <servers />
   </component>
