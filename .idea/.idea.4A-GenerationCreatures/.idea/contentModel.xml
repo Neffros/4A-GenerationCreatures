@@ -15,6 +15,7 @@
           <e p="Lib" t="Include">
             <e p="Genetic Algorithm" t="Include">
               <e p="GA.cs" t="Include" />
+              <e p="Genotype.cs" t="Include" />
             </e>
             <e p="Neural Network" t="Include">
               <e p="MLP.cs" t="Include" />
@@ -23,6 +24,7 @@
           </e>
           <e p="Managers" t="Include">
             <e p="CreatureParametersManager.cs" t="Include" />
+            <e p="CreatureParametersManagerEditor.cs" t="Include" />
           </e>
         </e>
       </e>

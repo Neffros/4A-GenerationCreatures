@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Globalization;
+
 using UnityEditor;
 using UnityEngine;
-
 [ExecuteInEditMode]
 public class CreatureParametersManager : MonoBehaviour
 {
@@ -53,16 +54,16 @@ public class CreatureParametersManager : MonoBehaviour
     [Space]
     [Header("Genetic Algorithm Parameters")]
     [SerializeField]
-    private int _generations = 300;
+    private int _generations = 600;
 
     [SerializeField]
-    private int _populationSize = 150;
+    private int _populationSize = 300;
 
     [SerializeField]
-    private int _tournaments = 100;
+    private int _tournaments = 200;
 
     [SerializeField]
-    private int _rounds = 10;
+    private int _rounds = 20;
 
     [SerializeField]
     [Range(0f, 1f)]
@@ -115,7 +116,7 @@ public class CreatureParametersManager : MonoBehaviour
 
         asset.Save(this._creatureFileName);
     }
-
+    
     public void GenerateCreatures()
     {
         for (int i = 0; i < this._creatureNb; i++)
@@ -135,7 +136,6 @@ public class CreatureParametersManager : MonoBehaviour
             this._rounds,
             this._mutationRate
         );
-
         this.Load(data);
         //this.GenerateCreatures();
     }
@@ -171,18 +171,18 @@ public class CreatureParametersManager : MonoBehaviour
         if (File.Exists(this._scriptTemplatePath))
         {
             string contents = File.ReadAllText(this._scriptTemplatePath);
-
+            
             contents = contents
-                .Replace("LEG_NUMBER", this._legNumber.ToString())
-                .Replace("LEG_AUTO_DISTANCE", this._legAutoDistance.ToString())
-                .Replace("LEG_WANTED_DISTANCE", this._legWantedDistance.ToString())
-                .Replace("LEG_SPREAD_ANGLE", this._legSpreadAngle.ToString())
-                .Replace("SCALE_X", this._scale.x.ToString())
-                .Replace("SCALE_Y", this._scale.y.ToString())
-                .Replace("SCALE_Z", this._scale.z.ToString())
-                .Replace("LEG_CUSTOM_OFFSET_X", this._legCustomOffset.x.ToString())
-                .Replace("LEG_CUSTOM_OFFSET_Y", this._legCustomOffset.y.ToString())
-                .Replace("LEG_CUSTOM_OFFSET_Z", this._legCustomOffset.z.ToString())
+                .Replace("LEG_NUMBER", this._legNumber.ToString(CultureInfo.InvariantCulture))
+                .Replace("LEG_AUTO_DISTANCE", this._legAutoDistance.ToString(CultureInfo.InvariantCulture))
+                .Replace("LEG_WANTED_DISTANCE", this._legWantedDistance.ToString(CultureInfo.InvariantCulture))
+                .Replace("LEG_SPREAD_ANGLE", this._legSpreadAngle.ToString(CultureInfo.InvariantCulture))
+                .Replace("SCALE_X", this._scale.x.ToString(CultureInfo.InvariantCulture))
+                .Replace("SCALE_Y", this._scale.y.ToString(CultureInfo.InvariantCulture))
+                .Replace("SCALE_Z", this._scale.z.ToString(CultureInfo.InvariantCulture))
+                .Replace("LEG_CUSTOM_OFFSET_X", this._legCustomOffset.x.ToString(CultureInfo.InvariantCulture))
+                .Replace("LEG_CUSTOM_OFFSET_Y", this._legCustomOffset.y.ToString(CultureInfo.InvariantCulture))
+                .Replace("LEG_CUSTOM_OFFSET_Z", this._legCustomOffset.z.ToString(CultureInfo.InvariantCulture))
                 .Replace("FBX_EXPORT_PATH", Path.Combine(Application.dataPath, "Prefabs", string.Concat("creature-", name, ".fbx")));
 
             File.WriteAllText(Path.Combine(Application.persistentDataPath, string.Concat("script-", name, ".py")), contents);

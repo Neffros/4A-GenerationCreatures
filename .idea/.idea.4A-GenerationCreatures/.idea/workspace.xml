@@ -15,9 +15,24 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CreatureParametersManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Lib/Genetic Algorithm/GA.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Lib/Genetic Algorithm/Genotype.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CreatureParametersManagerEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06214B24-5DBB-4D10-A9CE-FD10639BB04E/43/3464e7ae/UIElementsUtility.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D90B285-60B6-44CE-87B8-263EFCC36EED/c7/77720604/InspectorElement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/FE7EE188-1B52-4B0D-9443-F74417FB598B/ef/679e1845/GUIUtility.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Lib/ProcessManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D90B285-60B6-44CE-87B8-263EFCC36EED/48/97033afe/EditorCompilationInterface.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CreatureParametersManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06214B24-5DBB-4D10-A9CE-FD10639BB04E/d3/f6af0c9f/IMGUIContainer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D90B285-60B6-44CE-87B8-263EFCC36EED/fd/46bf34af/AssetDatabase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D90B285-60B6-44CE-87B8-263EFCC36EED/55/703c4022/PopupWindowWithoutFocus.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06214B24-5DBB-4D10-A9CE-FD10639BB04E/b7/1b69e470/MouseCaptureDispatchingStrategy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06214B24-5DBB-4D10-A9CE-FD10639BB04E/f0/5171743e/EventDispatcher.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Lib/Neural Network/MLP.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D90B285-60B6-44CE-87B8-263EFCC36EED/b1/a0b4a0c9/EditorApplication.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06214B24-5DBB-4D10-A9CE-FD10639BB04E/25/15583319/BaseVisualElementPanel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Entities/Creature.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -25,6 +40,11 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Editor/ParametersManagerEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ParametersManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GeneticAlgorithm.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Lib/Neural Network/MLP.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Lib/Genetic Algorithm/Genotype.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CreatureParametersManagerEditor.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Lib/Genetic Algorithm/GA.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CreatureParametersManager.cs" />
       </list>
     </option>
   </component>
@@ -55,10 +75,10 @@
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="40848">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="20724">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="40848" />
+      <option name="pid" value="20724" />
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
@@ -76,7 +96,7 @@
       <workItem from="1616143721261" duration="18457000" />
       <workItem from="1616166428884" duration="1858000" />
       <workItem from="1623140072157" duration="99000" />
-      <workItem from="1626871551629" duration="237000" />
+      <workItem from="1626871551629" duration="7914000" />
     </task>
     <servers />
   </component>
@@ -110,5 +130,12 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="UNITY_DEBUG_RUN_CONFIGURATION">
+        <watch expression="contents" />
+        <watch expression="contents" />
+        <watch expression="contents" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

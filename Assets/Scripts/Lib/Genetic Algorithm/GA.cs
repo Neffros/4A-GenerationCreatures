@@ -127,10 +127,10 @@ public static class GA
     /// <returns>A genotype of the last generation's population</returns>
     public static Genotype Generate(
         Genotype wantedGenotype,
-        int generations = 300,
-        int populationSize = 150,
-        int tournaments = 100,
-        int rounds = 10,
+        int generations = 600,
+        int populationSize = 300,
+        int tournaments = 200,
+        int rounds = 20,
         float mutationRate = 0.01f
     )
     {

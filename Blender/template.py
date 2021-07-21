@@ -331,4 +331,4 @@ apply_all_modifiers()
 join_legs_to_body()
 join_mesh_to_armature()
 
-'''bpy.ops.export_scene.fbx(filepath="FBX_EXPORT_PATH", axis_forward="-Z", axis_up="Y")'''
+bpy.ops.export_scene.fbx(filepath="FBX_EXPORT_PATH", axis_forward="-Z", axis_up="Y")
