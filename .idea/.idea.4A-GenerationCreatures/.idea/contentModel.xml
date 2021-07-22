@@ -11,6 +11,7 @@
         <e p="Scripts" t="Include">
           <e p="Entities" t="Include">
             <e p="Creature.cs" t="Include" />
+            <e p="RagdollGenerator.cs" t="Include" />
           </e>
           <e p="Lib" t="Include">
             <e p="Genetic Algorithm" t="Include">

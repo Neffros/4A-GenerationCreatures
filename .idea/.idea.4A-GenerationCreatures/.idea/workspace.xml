@@ -22,6 +22,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D90B285-60B6-44CE-87B8-263EFCC36EED/c7/77720604/InspectorElement.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/FE7EE188-1B52-4B0D-9443-F74417FB598B/ef/679e1845/GUIUtility.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Lib/ProcessManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Entities/RagdollGenerator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7D90B285-60B6-44CE-87B8-263EFCC36EED/48/97033afe/EditorCompilationInterface.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CreatureParametersManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06214B24-5DBB-4D10-A9CE-FD10639BB04E/d3/f6af0c9f/IMGUIContainer.cs" root0="SKIP_HIGHLIGHTING" />
@@ -45,6 +46,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CreatureParametersManagerEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Lib/Genetic Algorithm/GA.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CreatureParametersManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Entities/RagdollGenerator.cs" />
       </list>
     </option>
   </component>
@@ -75,10 +77,10 @@
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="20724">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="18260">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="20724" />
+      <option name="pid" value="18260" />
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
@@ -96,7 +98,10 @@
       <workItem from="1616143721261" duration="18457000" />
       <workItem from="1616166428884" duration="1858000" />
       <workItem from="1623140072157" duration="99000" />
-      <workItem from="1626871551629" duration="7914000" />
+      <workItem from="1626871551629" duration="7959000" />
+      <workItem from="1626946836445" duration="1278000" />
+      <workItem from="1626952598703" duration="3376000" />
+      <workItem from="1626960709760" duration="12491000" />
     </task>
     <servers />
   </component>
