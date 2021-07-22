@@ -77,10 +77,10 @@
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="18260">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="31440">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="18260" />
+      <option name="pid" value="31440" />
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
@@ -101,7 +101,7 @@
       <workItem from="1626871551629" duration="7959000" />
       <workItem from="1626946836445" duration="1278000" />
       <workItem from="1626952598703" duration="3376000" />
-      <workItem from="1626960709760" duration="12491000" />
+      <workItem from="1626960709760" duration="15729000" />
     </task>
     <servers />
   </component>
@@ -133,6 +133,19 @@
           <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Entities/RagdollGenerator.cs</url>
+          <line>37</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Entities/RagdollGenerator.cs" initialLine="37">
+            <startOffsets>
+              <option value="1214" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1215" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>

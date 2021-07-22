@@ -29,13 +29,41 @@ public class RagdollGenerator : MonoBehaviour
     {
         foreach (Transform child in rootBone.transform)
         {
-            //Debug.Log(child);
+            //Debug.Log(child.name);
             GenerateJoint(child);
         }
     }
     
     void GenerateJoint(Transform joint)
     {
+        joint.gameObject.AddComponent<Rigidbody>();
+        if (joint.parent.gameObject == rootbone)
+        {
+            GenerateJoint(joint.GetChild(0));
+            return;
+        }
+        
+        Transform parentJoint = joint.parent;
+        
+        CapsuleCollider capsuleCollider = joint.gameObject.AddComponent<CapsuleCollider>();
+        CharacterJoint characterJoint = joint.gameObject.AddComponent<CharacterJoint>();
+        
+        //remove line below to have static object to debug
+        characterJoint.connectedBody = parentJoint.GetComponent<Rigidbody>(); //joint must be connected to parent rigid body 
+        Vector3 centerPos = Vector3.Lerp(parentJoint.localPosition , joint.localPosition,0.5f);
+        capsuleCollider.center =centerPos;
+        
+        Debug.Log(centerPos.x + " - " + centerPos.y + " - "+ centerPos.z); //<-- only way to see the actual values, printing vec3 shows (0,0,0)
+        
+   
+        capsuleCollider.height =   Vector3.Distance(joint.position, parentJoint.position)/100;
+
+        capsuleCollider.radius = 0.0025f;
+        if (joint.name.Contains("end")) return;
+        GenerateJoint(joint.GetChild(0));
+        
+        //other logic where there was a reference to next instead of previous joint 
+        /*
         Transform nextJoint = joint.GetChild(0);
 
         nextJoint.gameObject.AddComponent<Rigidbody>();
@@ -49,7 +77,7 @@ public class RagdollGenerator : MonoBehaviour
         /*sphere.transform.localPosition =  Vector3.Lerp(joint.position, nextJoint.position, 0.5f);
         GameObject initedSphere = Instantiate(sphere);
         initedSphere.transform.SetParent(joint.parent); 
-        initedSphere.transform.localPosition = joint.localPosition;*/
+        initedSphere.transform.localPosition = joint.localPosition;
         
         
         capsuleCollider.radius = 0.0025f;
@@ -57,7 +85,7 @@ public class RagdollGenerator : MonoBehaviour
         
         if (nextJoint.name.Contains("end")) return;
 
-        GenerateJoint(nextJoint);
+        GenerateJoint(nextJoint);*/
 
     }
     
