@@ -213,7 +213,11 @@ public class CreatureParametersManager : MonoBehaviour
             GameObject asset = AssetDatabase.LoadAssetAtPath<GameObject>(string.Concat("Assets/Prefabs/", "creature-", name, ".fbx"));
 
             if (asset)
-                return GameObject.Instantiate(asset);
+            {
+                GameObject initedAsset = Instantiate(asset);
+                initedAsset = RagdollGenerator.Instance.GenerateRagdoll(initedAsset);
+                return initedAsset;
+            }
             return null;
         }
         catch (Exception e)

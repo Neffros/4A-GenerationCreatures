@@ -1,12 +1,58 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+[ExecuteInEditMode]
 public class RagdollGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject rootBone;
+    //[SerializeField] private GameObject rootBone;
+    private Transform rootBone;
+    #region Variables statiques
 
-    private void Start()
+    private static RagdollGenerator _instance = null;
+
+    #endregion
+
+    #region Propriétés statiques
+
+    public static RagdollGenerator Instance => RagdollGenerator._instance;
+
+    #endregion
+
+    private void Awake()
     {
-        this.GenerateJoints(rootBone.transform);
+        RagdollGenerator._instance = this;
+    }
+    
+    private void OnDestroy()
+    {
+        if (RagdollGenerator._instance == this)
+            RagdollGenerator._instance = null;
+    }
+
+    /*private void Start()
+    {
+        rootBone.AddComponent<Rigidbody>();
+        rootBone.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        foreach (Transform child in rootBone.transform)
+        {
+            GenerateJoints(child);
+        }
+    }*/
+
+    public GameObject GenerateRagdoll(GameObject asset)
+    {
+        //TODO generate englobing body hitbox 
+        rootBone = asset.transform.GetChild(0).GetChild(0);
+        rootBone.gameObject.AddComponent<Rigidbody>();
+        rootBone.gameObject.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        Debug.Log(rootBone.name);
+        
+        foreach (Transform child in rootBone)
+        {
+            GenerateJoints(child);
+        }
+
+        return asset;
     }
 
     void GenerateJoints(Transform joint)
@@ -16,13 +62,19 @@ public class RagdollGenerator : MonoBehaviour
 
         foreach (Transform childJoint in joint)
         {
+            
             characterJoint.connectedBody = joint.parent.GetComponent<Rigidbody>();
+            if (joint.parent == rootBone)
+            {
+                joint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            }
+            
+            joint.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             collider.center = childJoint.localPosition / 2;
             collider.height = childJoint.localPosition.magnitude;
             collider.radius = 0.0025f;
 
             if (childJoint.name.Contains("end")) return;
-
             this.GenerateJoints(childJoint);
         }
 
