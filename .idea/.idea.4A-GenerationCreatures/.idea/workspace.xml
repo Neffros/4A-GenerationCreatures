@@ -107,6 +107,7 @@
       <workItem from="1626960709760" duration="17997000" />
       <workItem from="1627020038063" duration="5400000" />
       <workItem from="1627045003615" duration="5218000" />
+      <workItem from="1627140855267" duration="223000" />
     </task>
     <servers />
   </component>
@@ -143,10 +144,10 @@
           <line>42</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Entities/RagdollGenerator.cs" initialLine="35">
             <startOffsets>
-              <option value="1005" />
+              <option value="1020" />
             </startOffsets>
             <endOffsets>
-              <option value="1006" />
+              <option value="1021" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />

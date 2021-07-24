@@ -39,13 +39,16 @@ public class RagdollGenerator : MonoBehaviour
         }
     }*/
 
-    public GameObject GenerateRagdoll(GameObject asset)
+    public GameObject GenerateRagdoll(GameObject asset, Vector3 scale)
     {
-        //TODO generate englobing body hitbox 
+        asset.transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
+        asset.transform.GetChild(0).gameObject.AddComponent<Rigidbody>();
+        asset.transform.GetChild(0).gameObject.GetComponent<BoxCollider>().size = scale;
+        asset.transform.GetChild(0).gameObject.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        
         rootBone = asset.transform.GetChild(0).GetChild(0);
         rootBone.gameObject.AddComponent<Rigidbody>();
         rootBone.gameObject.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        Debug.Log(rootBone.name);
         
         foreach (Transform child in rootBone)
         {

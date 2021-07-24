@@ -215,7 +215,7 @@ public class CreatureParametersManager : MonoBehaviour
             if (asset)
             {
                 GameObject initedAsset = Instantiate(asset);
-                initedAsset = RagdollGenerator.Instance.GenerateRagdoll(initedAsset);
+                initedAsset = RagdollGenerator.Instance.GenerateRagdoll(initedAsset, new Vector3(_scale.x/100, _scale.y/100, _scale.z/100));
                 return initedAsset;
             }
             return null;
