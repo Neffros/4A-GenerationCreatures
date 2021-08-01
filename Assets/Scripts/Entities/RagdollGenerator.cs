@@ -70,7 +70,7 @@ public class RagdollGenerator : MonoBehaviour
 
             if (childJoint.name.Contains("end"))
             {
-                joint.gameObject.AddComponent<MoveRagdoll>();
+                //joint.gameObject.AddComponent<MoveRagdoll>();
                 return;
             }
             this.GenerateJoints(childJoint);
