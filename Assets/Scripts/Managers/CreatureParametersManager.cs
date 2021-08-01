@@ -182,7 +182,7 @@ public class CreatureParametersManager : MonoBehaviour
                 .Replace("SCALE_Z", this._scale.z.ToString(CultureInfo.InvariantCulture))
                 .Replace("LEG_CUSTOM_OFFSET_X", this._legCustomOffset.x.ToString(CultureInfo.InvariantCulture))
                 .Replace("LEG_CUSTOM_OFFSET_Y", this._legCustomOffset.y.ToString(CultureInfo.InvariantCulture))
-                .Replace("LEG_CUSTOM_OFFSET_Z", this._legCustomOffset.z.ToString(CultureInfo.InvariantCulture))
+                .Replace("LEG_CUSTOM_OFFSET_Z", this._legCustomOffset.z.ToString(CultureInfo.InvariantCulture))    
                 .Replace("FBX_EXPORT_PATH", Path.Combine(Application.dataPath, "Prefabs", string.Concat("creature-", name, ".fbx")));
 
             File.WriteAllText(Path.Combine(Application.persistentDataPath, string.Concat("script-", name, ".py")), contents);

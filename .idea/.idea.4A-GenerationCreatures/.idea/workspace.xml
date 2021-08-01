@@ -16,6 +16,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/29AD182F-AA3F-478C-9310-D6A2E7143C15/52/7a3e5805/Logger.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Entities/MoveRagdoll.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Lib/Genetic Algorithm/GA.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Lib/Genetic Algorithm/Genotype.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CreatureParametersManagerEditor.cs" root0="FORCE_HIGHLIGHTING" />
@@ -50,6 +51,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Lib/Genetic Algorithm/GA.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/CreatureParametersManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Entities/RagdollGenerator.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Entities/MoveRagdoll.cs" />
       </list>
     </option>
   </component>
@@ -107,7 +109,12 @@
       <workItem from="1626960709760" duration="17997000" />
       <workItem from="1627020038063" duration="5400000" />
       <workItem from="1627045003615" duration="5218000" />
-      <workItem from="1627140855267" duration="223000" />
+      <workItem from="1627140855267" duration="1120000" />
+      <workItem from="1627309502223" duration="595000" />
+      <workItem from="1627390612199" duration="4783000" />
+      <workItem from="1627525111362" duration="1276000" />
+      <workItem from="1627544911894" duration="708000" />
+      <workItem from="1627850466291" duration="3310000" />
     </task>
     <servers />
   </component>
@@ -141,13 +148,13 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Entities/RagdollGenerator.cs</url>
-          <line>42</line>
+          <line>33</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Entities/RagdollGenerator.cs" initialLine="35">
             <startOffsets>
-              <option value="1020" />
+              <option value="714" />
             </startOffsets>
             <endOffsets>
-              <option value="1021" />
+              <option value="715" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />
@@ -157,10 +164,10 @@
           <line>212</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Managers/CreatureParametersManager.cs" initialLine="212">
             <startOffsets>
-              <option value="6451" />
+              <option value="6455" />
             </startOffsets>
             <endOffsets>
-              <option value="6573" />
+              <option value="6577" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="5" />

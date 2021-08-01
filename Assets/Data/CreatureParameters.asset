@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CreatureParameters
   m_EditorClassIdentifier: 
   _scale: {x: 4, y: 1, z: 3}
-  _legNumber: 10
+  _legNumber: 3
   _legAutoDistance: 1
   _legWantedDistance: 2
   _legSpreadAngle: 4

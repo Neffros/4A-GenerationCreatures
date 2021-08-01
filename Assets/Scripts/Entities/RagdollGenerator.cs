@@ -29,15 +29,6 @@ public class RagdollGenerator : MonoBehaviour
             RagdollGenerator._instance = null;
     }
 
-    /*private void Start()
-    {
-        rootBone.AddComponent<Rigidbody>();
-        rootBone.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        foreach (Transform child in rootBone.transform)
-        {
-            GenerateJoints(child);
-        }
-    }*/
 
     public GameObject GenerateRagdoll(GameObject asset, Vector3 scale)
     {
@@ -77,7 +68,11 @@ public class RagdollGenerator : MonoBehaviour
             collider.height = childJoint.localPosition.magnitude;
             collider.radius = 0.0025f;
 
-            if (childJoint.name.Contains("end")) return;
+            if (childJoint.name.Contains("end"))
+            {
+                joint.gameObject.AddComponent<MoveRagdoll>();
+                return;
+            }
             this.GenerateJoints(childJoint);
         }
 
